@@ -12,7 +12,15 @@
 
 using namespace native;
 
+AutoGCRoot* keyEventHandle = 0;
+
 #ifdef IPHONE
+
+static void keyboard_set_event_handle(value onEvent)
+{
+	keyEventHandle = new AutoGCRoot(onEvent);
+}
+DEFINE_PRIM(keyboard_set_event_handle, 1);
 
 value native_device_os()
 {
@@ -97,4 +105,11 @@ DEFINE_ENTRY_POINT(native_main);
 extern "C" int native_register_prims() 
 { 
     return 0; 
+}
+
+extern "C" void sendKeyEvent(int key)
+{
+    value o = alloc_empty_object();
+    alloc_field(o,val_id("data"),alloc_int(key));
+    val_call1(keyEventHandle->get(), o);
 }

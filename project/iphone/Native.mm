@@ -5,6 +5,48 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
 
+using namespace native;
+
+@interface MyView : NSObject <UITextFieldDelegate>
+{
+}
+
+@end
+
+@implementation MyView
+
+extern "C" void sendKeyEvent(int key);
+
+- (BOOL)textField:(UITextField *)_textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string 
+{
+   if([string length] == 0)
+   {
+   		//code for backspace?
+      	sendKeyEvent(8);
+   }
+   
+   else
+   {
+   		for(int i = 0; i < [string length]; i++)
+      	{
+      		unichar c = [string characterAtIndex:i];
+			sendKeyEvent(c);
+      	}
+   }
+
+   return NO; // don't allow the edit! (keep placeholder text there) 
+}
+
+//Return = auto-hide and maybe an event!
+- (BOOL)textFieldShouldReturn:(UITextField*)t 
+{
+	//mStage->SetFocusObject(0);
+    hideKeyboard();
+    return YES;
+}
+
+@end
+
 namespace native 
 {
     UIActivityIndicatorView* activityIndicator;
@@ -81,7 +123,7 @@ namespace native
 	
 	void enableKeyboard(bool withEnable)
 	{
-	   if(mKeyboardEnabled!=withEnable)
+	   if(mKeyboardEnabled != withEnable)
 	   {
 		   mKeyboardEnabled = withEnable;
 		   
@@ -95,7 +137,7 @@ namespace native
 				 mTextField = [[UITextField alloc] initWithFrame: CGRectMake(0,0,0,0)];
 				 #endif
 	
-				 //mTextField.delegate = self;
+				 mTextField.delegate = [[MyView alloc] init];
 				 
 				 /* placeholder so there is something to delete! (from SDL code) */
 				 mTextField.text = @" ";

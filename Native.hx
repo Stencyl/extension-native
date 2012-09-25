@@ -19,8 +19,11 @@ import com.stencyl.event.StencylEvent;
 import nme.utils.ByteArray;
 import nme.display.BitmapData;
 import nme.geom.Rectangle;
+import nme.events.KeyboardEvent;
+import nme.events.EventDispatcher;
+import com.stencyl.Input;
 
-class Native 
+class Native
 {	
 	public static function osName():String
 	{
@@ -97,6 +100,7 @@ class Native
 	public static function showKeyboard():Void
 	{
 		#if(cpp && mobile && !android)
+		initKeyboard();
 		native_device_show_keyboard();
 		#end
 		
@@ -113,6 +117,7 @@ class Native
 	public static function hideKeyboard():Void
 	{
 		#if(cpp && mobile && !android)
+		initKeyboard();
 		native_device_hide_keyboard();
 		#end
 		
@@ -124,6 +129,27 @@ class Native
 		
 		funcHideKeyboard([]);
 		#end
+	}
+	
+	public static function initKeyboard():Void 
+	{
+		#if(cpp && mobile && !android)
+		if(!keyboardInitialized)
+		{
+			keyboard_set_event_handle(notifyListeners);
+			keyboardInitialized = true;
+		}
+		#end	
+	}
+	
+	private static function notifyListeners(inEvent:Dynamic)
+	{
+		#if(cpp && mobile && !android)
+		var data:Int = Std.int(Reflect.field(inEvent, "data"));
+		trace("Pressed: " + data);
+		Input.onKeyDown(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, data, data));
+		Input.onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_UP, true, false, data, data));
+		#end	
 	}
 	
 	//Badge
@@ -186,7 +212,11 @@ class Native
 	private static var funcHideKeyboard:Dynamic;
 	#end
 	
+	private static var keyboardInitialized:Bool = false;
+	
 	#if(cpp && mobile && !android)
+	static var keyboard_set_event_handle = nme.Loader.load("keyboard_set_event_handle",1);
+	
 	static var native_device_os = nme.Loader.load("native_device_os",0);
 	static var native_device_vervion = nme.Loader.load("native_device_vervion",0);
 	static var native_device_name = nme.Loader.load("native_device_name",0);
