@@ -93,6 +93,39 @@ class Native
 		#end
 	}
 	
+	//Keyboard
+	public static function showKeyboard():Void
+	{
+		#if(cpp && mobile && !android)
+		native_device_show_keyboard();
+		#end
+		
+		#if android
+		if(funcShowKeyboard == null)
+		{
+			funcShowKeyboard = JNI.createStaticMethod("Native", "showKeyboard", "()V", true);
+		}
+		
+		funcShowKeyboard([]);
+		#end
+	}
+	
+	public static function hideKeyboard():Void
+	{
+		#if(cpp && mobile && !android)
+		native_device_hide_keyboard();
+		#end
+		
+		#if android
+		if(funcHideKeyboard == null)
+		{
+			funcHideKeyboard = JNI.createStaticMethod("Native", "hideKeyboard", "()V", true);
+		}
+		
+		funcHideKeyboard([]);
+		#end
+	}
+	
 	//Badge
 	
 	public static function setIconBadgeNumber(n:Int):Void
@@ -149,6 +182,8 @@ class Native
 	#if android
 	private static var funcAlert:Dynamic;
 	private static var funcVibrate:Dynamic;
+	private static var funcShowKeyboard:Dynamic;
+	private static var funcHideKeyboard:Dynamic;
 	#end
 	
 	#if(cpp && mobile && !android)
@@ -159,6 +194,9 @@ class Native
 	static var native_device_network_available = nme.Loader.load("native_device_network_available",0);
 	static var native_device_vibrate = nme.Loader.load("native_device_vibrate",1);
 	static var native_device_badge = nme.Loader.load("native_device_badge",1);
+	
+	static var native_device_show_keyboard = nme.Loader.load("native_device_show_keyboard",0);
+	static var native_device_hide_keyboard = nme.Loader.load("native_device_hide_keyboard",0);
 	
 	static var native_system_ui_show_alert = nme.Loader.load("native_system_ui_show_alert",2);
 	static var native_system_ui_show_system_loading_view = nme.Loader.load("native_system_ui_show_system_loading_view",0);

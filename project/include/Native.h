@@ -11,6 +11,9 @@ namespace native
 	bool networkAvailable();
 	void vibrate(float milliseconds);
 	void setBadgeNumber(int n);
+	void showKeyboard();
+	void hideKeyboard();
+	void enableKeyboard(bool flag);
     
     void showSystemAlert(const char* title, const char* message);
     void showLoadingScreen();

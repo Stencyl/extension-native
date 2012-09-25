@@ -10,6 +10,9 @@ namespace native
     UIActivityIndicatorView* activityIndicator;
     UIView* loadingView;
     
+    UITextField *mTextField;
+    BOOL mKeyboardEnabled;
+    
 	const char* os()
     {
 		return  [[[UIDevice currentDevice] systemName] UTF8String];
@@ -65,8 +68,62 @@ namespace native
 	{
 		[UIApplication sharedApplication].applicationIconBadgeNumber = number;
 	}
+	
+	void showKeyboard()
+	{
+		enableKeyboard(TRUE);
+	}
+	
+	void hideKeyboard()
+	{
+		enableKeyboard(FALSE);
+	}
+	
+	void enableKeyboard(bool withEnable)
+	{
+	   if(mKeyboardEnabled!=withEnable)
+	   {
+		   mKeyboardEnabled = withEnable;
+		   
+		   if(mKeyboardEnabled)
+		   {
+			  if(mTextField == nil)
+			  {
+				 #ifndef OBJC_ARC
+				 mTextField = [[[UITextField alloc] initWithFrame: CGRectMake(0,0,0,0)] autorelease];
+				 #else
+				 mTextField = [[UITextField alloc] initWithFrame: CGRectMake(0,0,0,0)];
+				 #endif
+	
+				 //mTextField.delegate = self;
+				 
+				 /* placeholder so there is something to delete! (from SDL code) */
+				 mTextField.text = @" ";
+	
+				 /* set UITextInputTrait properties, mostly to defaults */
+				 mTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+				 mTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+				 mTextField.enablesReturnKeyAutomatically = NO;
+				 mTextField.keyboardAppearance = UIKeyboardAppearanceDefault;
+				 mTextField.keyboardType = UIKeyboardTypeDefault;
+				 mTextField.returnKeyType = UIReturnKeyDefault;
+				 mTextField.secureTextEntry = NO;
+				 mTextField.hidden = YES;
+	
+			     [[[UIApplication sharedApplication] keyWindow] addSubview:mTextField];
+			  }
+			  
+			  [mTextField becomeFirstResponder];
+		   }
+		   
+		   else
+		   {
+			  [mTextField resignFirstResponder];
+		   }
+	   }
+	}
     
-    void showSystemAlert(const char *title,const char *message)
+    void showSystemAlert(const char *title, const char *message)
     {	
         UIAlertView* alert= [[UIAlertView alloc] initWithTitle: [[NSString alloc] initWithUTF8String:title] message: [[NSString alloc] initWithUTF8String:message] 
                                                       delegate: NULL cancelButtonTitle: @"OK" otherButtonTitles: NULL] ;//autorelease];
@@ -101,6 +158,4 @@ namespace native
     }
     
     //TODO: WebView
-    
-    //TODO: Keyboard
 }

@@ -56,6 +56,18 @@ void native_device_badge(value n)
 }
 DEFINE_PRIM(native_device_badge,1);
 
+void native_device_show_keyboard()
+{
+	showKeyboard();
+}
+DEFINE_PRIM(native_device_show_keyboard,0);
+
+void native_device_hide_keyboard()
+{
+	hideKeyboard();
+}
+DEFINE_PRIM(native_device_hide_keyboard,0);
+
 void native_system_ui_show_alert(value title,value message)
 {
 	showSystemAlert(val_string(title),val_string(message));

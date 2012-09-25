@@ -1,3 +1,5 @@
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -71,19 +73,23 @@ public class Native
 		);
     }
     
-    /*public static void showKeyboard(boolean show) 
+    public static void showKeyboard() 
     {
     	if(activity == null)
 		{
 			activity = GameActivity.getInstance();
 		}
 		
-        InputMethodManager m = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        m.hideSoftInputFromWindow(activity.mView.getWindowToken(), 0);
-        
-        if(show) 
-        {
-            mgr.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        }
-    }*/
+        activity.showKeyboard(true);
+    }
+    
+    public static void hideKeyboard() 
+    {
+    	if(activity == null)
+		{
+			activity = GameActivity.getInstance();
+		}
+		
+        activity.showKeyboard(false);
+    }
 }
