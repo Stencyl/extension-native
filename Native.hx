@@ -8,115 +8,92 @@ import neko.Lib;
 import nme.Lib;
 #end
 
+#if android
+import nme.JNI;
+#end
+
+import com.stencyl.Engine;
+import com.stencyl.event.EventMaster;
+import com.stencyl.event.StencylEvent;
+
 import nme.utils.ByteArray;
 import nme.display.BitmapData;
 import nme.geom.Rectangle;
 
 class Native 
 {	
-	private static var contentScaleFactor:Int = 1;
-	private static var forceRetina:Bool = false;
-	
 	public static function osName():String
 	{
-		#if cpp
+		#if(cpp && mobile && !android)
 		return native_device_os();
-		#end
-		
-		#if !cpp
+		#elseif android
+		return "";
+		#else
 		return "";
 		#end
 	}
 	
 	public static function osVersion():String
 	{
-		#if cpp
+		#if(cpp && mobile && !android)
 		return native_device_vervion();
-		#end
-		
-		#if !cpp
+		#elseif android
+		return "";
+		#else
 		return "";
 		#end
 	}
 	
 	public static function deviceName():String
 	{
-		#if cpp
+		#if(cpp && mobile && !android)
 		return native_device_name();
-		#end
-		
-		#if !cpp
+		#elseif android
+		return "";
+		#else
 		return "";
 		#end
 	}
 	
 	public static function model():String
 	{
-		#if cpp
+		#if(cpp && mobile && !android)
 		return native_device_model();
-		#end
-		
-		#if !cpp
+		#elseif android
+		return "";
+		#else
 		return "";
 		#end
 	}
 	
 	public static function networkAvailable():Bool
 	{
-		#if cpp
+		#if(cpp && mobile && !android)
 		return native_device_network_available();
-		#end
-		
-		#if !cpp
+		#elseif android
+		return false;
+		#else
 		return false;
 		#end
 	}
 	
 	public static function vibrate(time:Float):Void
 	{
-		#if cpp
+		#if(cpp && mobile && !android)
 		native_device_vibrate(time);
 		#end
-	}
-	
-	public static function isRetina():Bool
-	{
-		#if cpp
-		if(forceRetina)	
+		
+		#if android
+		if(funcVibrate == null)
 		{
-			return true;
+			funcVibrate = JNI.createStaticMethod("Native", "vibrate", "(I)V", true);
 		}
 		
-		return native_device_is_retina();
-		#end
-		
-		#if !cpp
-		return false;
+		funcVibrate([time * 1000]);
 		#end
 	}
-	
-	public static function scaleFactor():Float
-	{
-		#if cpp
-	    if(isRetina())
-	    {
-	    	contentScaleFactor = 2;
-	    }
-	    
-	    else
-	    {
-	    	contentScaleFactor = 1;
-	    }
-		
-		return contentScaleFactor;
-		#end
-		
-		#if !cpp
-		return 0;
-		#end
-	}
-	
-	//---
+
+	//Alert
 	
 	private static var alertTitle:String;
 	private static var alertMSG:String;
@@ -128,36 +105,48 @@ class Native
 		haxe.Timer.delay(delayAlert, 30);
 	}
 	
+	private static function delayAlert():Void
+	{
+		#if(cpp && mobile && !android)
+		native_system_ui_show_alert(alertTitle, alertMSG);
+		#end
+		
+		#if android
+		if(funcAlert == null)
+		{
+			funcAlert = nme.JNI.createStaticMethod("Native", "showAlert", "(Ljava/lang/String;Ljava/lang/String;)V", true);
+		}
+		
+		funcAlert([alertTitle, alertMSG]);
+		#end
+	}
+	
+	//Spinner - No Android Equivalent
+	
 	public static function showLoadingScreen():Void
 	{
-		#if cpp
+		#if(cpp && mobile && !android)
 		native_system_ui_show_system_loading_view();
 		#end
 	}	
 	
 	public static function hideLoadingScreen():Void
 	{
-		#if cpp
+		#if(cpp && mobile && !android)
 		native_system_ui_hide_system_loading_view();
 		#end
 	}
 	
-	private static function delayAlert():Void
-	{
-		#if cpp
-		native_system_ui_show_alert(alertTitle, alertMSG);
-		#end
-	}
+	#if android
+	private static var funcAlert:Dynamic;
+	private static var funcVibrate:Dynamic;
+	#end
 	
-	#if cpp
-	static var native_deivce_get_doc_path = nme.Loader.load("native_device_get_doc_path",0);
-	static var native_deivce_get_rec_path = nme.Loader.load("native_device_get_rec_path",0);
-	static var native_device_unique_id = nme.Loader.load("native_device_unique_id",0);
+	#if(cpp && mobile && !android)
 	static var native_device_os = nme.Loader.load("native_device_os",0);
 	static var native_device_vervion = nme.Loader.load("native_device_vervion",0);
 	static var native_device_name = nme.Loader.load("native_device_name",0);
 	static var native_device_model = nme.Loader.load("native_device_model",0);
-	static var native_device_is_retina = nme.Loader.load("native_device_is_retina",0);
 	static var native_device_network_available = nme.Loader.load("native_device_network_available",0);
 	static var native_device_vibrate = nme.Loader.load("native_device_vibrate",1);
 	

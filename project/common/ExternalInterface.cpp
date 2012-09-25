@@ -38,12 +38,6 @@ value native_device_model()
 }
 DEFINE_PRIM(native_device_model,0);
 
-value native_device_is_retina()
-{
-	return alloc_bool(isRetina());
-}
-DEFINE_PRIM(native_device_is_retina,0);
-
 value native_device_network_available()
 {
 	return alloc_bool(networkAvailable());
