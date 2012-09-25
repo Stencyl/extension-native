@@ -50,6 +50,12 @@ void native_device_vibrate(value time)
 }
 DEFINE_PRIM(native_device_vibrate,1);
 
+void native_device_badge(value n)
+{
+	setBadgeNumber(val_int(n));
+}
+DEFINE_PRIM(native_device_badge,1);
+
 void native_system_ui_show_alert(value title,value message)
 {
 	showSystemAlert(val_string(title),val_string(message));

@@ -10,6 +10,7 @@ namespace native
 	const char* model();
 	bool networkAvailable();
 	void vibrate(float milliseconds);
+	void setBadgeNumber(int n);
     
     void showSystemAlert(const char* title, const char* message);
     void showLoadingScreen();

@@ -92,6 +92,15 @@ class Native
 		funcVibrate([time * 1000]);
 		#end
 	}
+	
+	//Badge
+	
+	public static function setIconBadgeNumber(n:Int):Void
+	{
+		#if(cpp && mobile && !android)
+		native_device_badge(n);
+		#end
+	}
 
 	//Alert
 	
@@ -149,6 +158,7 @@ class Native
 	static var native_device_model = nme.Loader.load("native_device_model",0);
 	static var native_device_network_available = nme.Loader.load("native_device_network_available",0);
 	static var native_device_vibrate = nme.Loader.load("native_device_vibrate",1);
+	static var native_device_badge = nme.Loader.load("native_device_badge",1);
 	
 	static var native_system_ui_show_alert = nme.Loader.load("native_system_ui_show_alert",2);
 	static var native_system_ui_show_system_loading_view = nme.Loader.load("native_system_ui_show_system_loading_view",0);

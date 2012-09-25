@@ -7,9 +7,6 @@
 
 namespace native 
 {
-    bool retina = false;
-	bool retinaInit = false;
-    
     UIActivityIndicatorView* activityIndicator;
     UIView* loadingView;
     
@@ -31,16 +28,6 @@ namespace native
 	const char* model()
     {
 		return  [[[UIDevice currentDevice] model] UTF8String];
-	}
-	
-	bool isRetina()
-    {
-		if(!retinaInit)
-        {
-			retina = ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO);
-		}
-        
-		return retina;
 	}
 	
     bool networkAvailable()
@@ -72,6 +59,11 @@ namespace native
 	void vibrate(float milliseconds)
     {
 		AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+	}
+	
+	void setBadgeNumber(int number)
+	{
+		[UIApplication sharedApplication].applicationIconBadgeNumber = number;
 	}
     
     void showSystemAlert(const char *title,const char *message)
