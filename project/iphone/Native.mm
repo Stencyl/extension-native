@@ -17,6 +17,7 @@ using namespace native;
 
 extern "C" void sendKeyEvent(int key);
 extern "C" void sendTextFieldEvent(const char* data);
+extern "C" void sendTextFieldEvent2(const char* data);
 
 - (BOOL)textField:(UITextField *)_textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string 
 {
@@ -58,7 +59,7 @@ extern "C" void sendTextFieldEvent(const char* data);
 - (BOOL)textFieldShouldReturn:(UITextField*)t 
 {
 	//mStage->SetFocusObject(0);
-	sendTextFieldEvent("@SUBMIT@");
+	sendTextFieldEvent2([t.text UTF8String]);
     hideKeyboard();
     return YES;
 }

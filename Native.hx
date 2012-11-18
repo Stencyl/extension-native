@@ -161,6 +161,7 @@ class Native
 		
 		if(data == "@SUBMIT@")
 		{
+			data = Reflect.field(inEvent, "data2");
 			Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_DONE, data));
 		}
 		
