@@ -112,7 +112,7 @@ class Native
 		}
 		
 		funcShowKeyboard([]);
-		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_SHOW, data));
+		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_SHOW, ""));
 		#end
 	}
 	
@@ -131,7 +131,7 @@ class Native
 		}
 		
 		funcHideKeyboard([]);
-		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_HIDE, data));
+		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_HIDE, ""));
 		#end
 	}
 	
