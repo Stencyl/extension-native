@@ -16,10 +16,11 @@ using namespace native;
 @implementation MyView
 
 extern "C" void sendKeyEvent(int key);
+extern "C" void sendTextFieldEvent(const char* data);
 
 - (BOOL)textField:(UITextField *)_textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string 
 {
-   if([string length] == 0)
+   /*if([string length] == 0)
    {
    		//code for backspace?
       	sendKeyEvent(8);
@@ -32,15 +33,32 @@ extern "C" void sendKeyEvent(int key);
       		unichar c = [string characterAtIndex:i];
 			sendKeyEvent(c);
       	}
+   }*/
+   
+   if([string length] == 0)
+   {
+   		if([_textField.text length] > 0)
+   		{
+   			NSString* temp = [_textField.text substringToIndex:[_textField.text length] - 1];
+   			sendTextFieldEvent([temp UTF8String]);
+   		}
+   }
+   
+   else
+   {
+   		NSString* temp = _textField.text;
+		temp = [NSString stringWithFormat:@"%@%@", temp, string];
+   		sendTextFieldEvent([temp UTF8String]);
    }
 
-   return NO; // don't allow the edit! (keep placeholder text there) 
+   return YES; // don't allow the edit! (keep placeholder text there) 
 }
 
 //Return = auto-hide and maybe an event!
 - (BOOL)textFieldShouldReturn:(UITextField*)t 
 {
 	//mStage->SetFocusObject(0);
+	sendTextFieldEvent("@SUBMIT@");
     hideKeyboard();
     return YES;
 }

@@ -113,3 +113,10 @@ extern "C" void sendKeyEvent(int key)
     alloc_field(o,val_id("data"),alloc_int(key));
     val_call1(keyEventHandle->get(), o);
 }
+
+extern "C" void sendTextFieldEvent(const char* data)
+{
+    value o = alloc_empty_object();
+    alloc_field(o,val_id("data"),alloc_string(data));
+    val_call1(keyEventHandle->get(), o);
+}

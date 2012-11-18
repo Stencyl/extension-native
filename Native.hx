@@ -102,6 +102,7 @@ class Native
 		#if(cpp && mobile && !android)
 		initKeyboard();
 		native_device_show_keyboard();
+		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_SHOW, ""));
 		#end
 		
 		#if android
@@ -111,6 +112,7 @@ class Native
 		}
 		
 		funcShowKeyboard([]);
+		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_SHOW, data));
 		#end
 	}
 	
@@ -119,6 +121,7 @@ class Native
 		#if(cpp && mobile && !android)
 		initKeyboard();
 		native_device_hide_keyboard();
+		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_HIDE, ""));
 		#end
 		
 		#if android
@@ -128,6 +131,7 @@ class Native
 		}
 		
 		funcHideKeyboard([]);
+		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_HIDE, data));
 		#end
 	}
 	
@@ -145,10 +149,25 @@ class Native
 	private static function notifyListeners(inEvent:Dynamic)
 	{
 		#if(cpp && mobile && !android)
-		var data:Int = Std.int(Reflect.field(inEvent, "data"));
-		trace("Pressed: " + data);
-		Input.onKeyDown(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, data, data));
-		Input.onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_UP, true, false, data, data));
+		
+		//Fire Key Event
+		//var data:Int = Std.int(Reflect.field(inEvent, "data"));
+		//Input.onKeyDown(new KeyboardEvent(KeyboardEvent.KEY_DOWN, true, false, data, data));
+		//Input.onKeyUp(new KeyboardEvent(KeyboardEvent.KEY_UP, true, false, data, data));
+		
+		//Fire a special event
+		var data = Reflect.field(inEvent, "data");
+		trace("Text: " + data);
+		
+		if(data == "@SUBMIT@")
+		{
+			Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_DONE, data));
+		}
+		
+		else
+		{
+			Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_EVENT, data));
+		}
 		#end	
 	}
 	
