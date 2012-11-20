@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import org.haxe.nme.*;
 
+import android.util.Log;
 import android.app.*;
 import android.content.*;
 import android.content.res.AssetManager;
@@ -26,6 +27,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.text.*;
 
 public class Native
 {
@@ -73,11 +75,31 @@ public class Native
 		);
     }
     
+    private static boolean gotHandle = false;
+    
     public static void showKeyboard() 
     {
     	if(activity == null)
 		{
 			activity = GameActivity.getInstance();
+		}
+		
+		if(!gotHandle)
+		{
+			/*EditText textField = (EditText) activity.findViewById(R.id.editTextConvertValue);
+		
+			textField.addTextChangedListener
+			(
+				new TextWatcher()
+				{
+					public void afterTextChanged(Editable s) 
+					{
+						System.out.println("TESTING: " + s);
+					}
+				}
+			);*/
+			
+			gotHandle = true;
 		}
 		
         activity.showKeyboard(true);
