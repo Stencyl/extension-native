@@ -140,6 +140,16 @@ namespace native
 		enableKeyboard(FALSE);
 	}
 	
+	void setKeyboardText(const char* text)
+	{
+		if(mTextField != nil)
+		{
+			NSString* temp = [[NSString alloc] initWithUTF8String:text];
+			mTextField.text = temp;
+			[temp release];
+		}
+	}
+	
 	void enableKeyboard(bool withEnable)
 	{
 	   if(mKeyboardEnabled != withEnable)

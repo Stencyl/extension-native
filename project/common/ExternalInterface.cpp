@@ -76,6 +76,12 @@ void native_device_hide_keyboard()
 }
 DEFINE_PRIM(native_device_hide_keyboard,0);
 
+void native_setKeyboardText(value text)
+{
+	setKeyboardText(val_string(text));
+}
+DEFINE_PRIM(native_setKeyboardText,1);
+
 void native_system_ui_show_alert(value title,value message)
 {
 	showSystemAlert(val_string(title),val_string(message));

@@ -135,6 +135,17 @@ class Native
 		#end
 	}
 	
+	public static function setKeyboardText(text:String):Void
+	{
+		#if(cpp && mobile && !android)
+		native_setKeyboardText(text);
+		#end
+		
+		#if android
+		//TODO:
+		#end
+	}
+	
 	public static function initKeyboard():Void 
 	{
 		#if(cpp && mobile && !android)
@@ -247,6 +258,7 @@ class Native
 	
 	static var native_device_show_keyboard = nme.Loader.load("native_device_show_keyboard",0);
 	static var native_device_hide_keyboard = nme.Loader.load("native_device_hide_keyboard",0);
+	static var native_setKeyboardText = nme.Loader.load("native_setKeyboardText",1);
 	
 	static var native_system_ui_show_alert = nme.Loader.load("native_system_ui_show_alert",2);
 	static var native_system_ui_show_system_loading_view = nme.Loader.load("native_system_ui_show_system_loading_view",0);

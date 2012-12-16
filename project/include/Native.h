@@ -13,6 +13,7 @@ namespace native
 	void setBadgeNumber(int n);
 	void showKeyboard();
 	void hideKeyboard();
+	void setKeyboardText(const char* text);
 	void enableKeyboard(bool flag);
     
     void showSystemAlert(const char* title, const char* message);
