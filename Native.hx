@@ -1,26 +1,20 @@
 package;
 
-#if cpp
-import cpp.Lib;
-#elseif neko
-import neko.Lib;
-#else
-import nme.Lib;
-#end
+import openfl.Lib;
 
 #if android
-import nme.JNI;
+import openfl.utils.JNI;
 #end
 
 import com.stencyl.Engine;
 import com.stencyl.event.EventMaster;
 import com.stencyl.event.StencylEvent;
 
-import nme.utils.ByteArray;
-import nme.display.BitmapData;
-import nme.geom.Rectangle;
-import nme.events.KeyboardEvent;
-import nme.events.EventDispatcher;
+import openfl.utils.ByteArray;
+import openfl.display.BitmapData;
+import openfl.geom.Rectangle;
+import openfl.events.KeyboardEvent;
+import openfl.events.EventDispatcher;
 import com.stencyl.Input;
 
 class Native
@@ -213,7 +207,7 @@ class Native
 		#if android
 		if(funcAlert == null)
 		{
-			funcAlert = nme.JNI.createStaticMethod("Native", "showAlert", "(Ljava/lang/String;Ljava/lang/String;)V", true);
+			funcAlert = JNI.createStaticMethod("Native", "showAlert", "(Ljava/lang/String;Ljava/lang/String;)V", true);
 		}
 		
 		funcAlert([alertTitle, alertMSG]);
@@ -246,22 +240,22 @@ class Native
 	private static var keyboardInitialized:Bool = false;
 	
 	#if(cpp && mobile && !android)
-	static var keyboard_set_event_handle = nme.Loader.load("keyboard_set_event_handle",1);
+	static var keyboard_set_event_handle = Lib.load("native","keyboard_set_event_handle",1);
 	
-	static var native_device_os = nme.Loader.load("native_device_os",0);
-	static var native_device_vervion = nme.Loader.load("native_device_vervion",0);
-	static var native_device_name = nme.Loader.load("native_device_name",0);
-	static var native_device_model = nme.Loader.load("native_device_model",0);
-	static var native_device_network_available = nme.Loader.load("native_device_network_available",0);
-	static var native_device_vibrate = nme.Loader.load("native_device_vibrate",1);
-	static var native_device_badge = nme.Loader.load("native_device_badge",1);
+	static var native_device_os = Lib.load("native","native_device_os",0);
+	static var native_device_vervion = Lib.load("native","native_device_vervion",0);
+	static var native_device_name = Lib.load("native","native_device_name",0);
+	static var native_device_model = Lib.load("native","native_device_model",0);
+	static var native_device_network_available = Lib.load("native","native_device_network_available",0);
+	static var native_device_vibrate = Lib.load("native","native_device_vibrate",1);
+	static var native_device_badge = Lib.load("native","native_device_badge",1);
 	
-	static var native_device_show_keyboard = nme.Loader.load("native_device_show_keyboard",0);
-	static var native_device_hide_keyboard = nme.Loader.load("native_device_hide_keyboard",0);
-	static var native_setKeyboardText = nme.Loader.load("native_setKeyboardText",1);
+	static var native_device_show_keyboard = Lib.load("native","native_device_show_keyboard",0);
+	static var native_device_hide_keyboard = Lib.load("native","native_device_hide_keyboard",0);
+	static var native_setKeyboardText = Lib.load("native","native_setKeyboardText",1);
 	
-	static var native_system_ui_show_alert = nme.Loader.load("native_system_ui_show_alert",2);
-	static var native_system_ui_show_system_loading_view = nme.Loader.load("native_system_ui_show_system_loading_view",0);
-	static var native_system_ui_hide_system_loading_view = nme.Loader.load("native_system_ui_hide_system_loading_view",0);
+	static var native_system_ui_show_alert = Lib.load("native","native_system_ui_show_alert",2);
+	static var native_system_ui_show_system_loading_view = Lib.load("native","native_system_ui_show_system_loading_view",0);
+	static var native_system_ui_hide_system_loading_view = Lib.load("native","native_system_ui_hide_system_loading_view",0);
 	#end
 }

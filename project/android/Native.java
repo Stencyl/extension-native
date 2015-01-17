@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
-import org.haxe.nme.*;
+import org.haxe.lime.*;
 
 import android.util.Log;
 import android.app.*;
