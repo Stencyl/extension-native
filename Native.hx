@@ -19,6 +19,9 @@ import com.stencyl.Input;
 
 class Native
 {	
+
+	private function new() {}
+	
 	public static function osName():String
 	{
 		#if(cpp && mobile && !android)
@@ -83,7 +86,7 @@ class Native
 		#if android
 		if(funcVibrate == null)
 		{
-			funcVibrate = JNI.createStaticMethod("Native", "vibrate", "(I)V", true);
+			funcVibrate = JNI.createStaticMethod("com/androidnative/Native", "vibrate", "(I)V", true);
 		}
 		
 		funcVibrate([time * 1000]);
@@ -100,9 +103,11 @@ class Native
 		#end
 		
 		#if android
+		initKeyboard();
+		
 		if(funcShowKeyboard == null)
 		{
-			funcShowKeyboard = JNI.createStaticMethod("Native", "showKeyboard", "()V", true);
+			funcShowKeyboard = JNI.createStaticMethod("com/androidnative/Native", "showKeyboard", "()V", true);
 		}
 		
 		funcShowKeyboard([]);
@@ -119,9 +124,11 @@ class Native
 		#end
 		
 		#if android
+        initKeyboard();
+ 
 		if(funcHideKeyboard == null)
 		{
-			funcHideKeyboard = JNI.createStaticMethod("Native", "hideKeyboard", "()V", true);
+			funcHideKeyboard = JNI.createStaticMethod("com/androidnative/Native", "hideKeyboard", "()V", true);
 		}
 		
 		funcHideKeyboard([]);
@@ -136,7 +143,12 @@ class Native
 		#end
 		
 		#if android
-		//TODO:
+		if(funcSetKeyboardText == null)
+		{
+			funcSetKeyboardText = JNI.createStaticMethod("com/androidnative/Native", "setText", "(Ljava/lang/String;)V", true);
+		}
+		
+		funcSetKeyboardText([text]);
 		#end
 	}
 	
@@ -148,7 +160,22 @@ class Native
 			keyboard_set_event_handle(notifyListeners);
 			keyboardInitialized = true;
 		}
-		#end	
+		#end
+		
+		#if android
+		if(!keyboardInitialized)
+		{
+			if(funcKeyboardInitialized == null)
+			{
+				funcKeyboardInitialized = JNI.createStaticMethod("com/androidnative/Native", "initialize", "(Lorg/haxe/lime/HaxeObject;)V", true);
+			}
+			var args = new Array<Dynamic>();
+            args.push(new Native());
+            funcKeyboardInitialized(args);
+			
+			keyboardInitialized = true;
+		}
+		#end
 	}
 	
 	private static function notifyListeners(inEvent:Dynamic)
@@ -177,8 +204,38 @@ class Native
 		#end	
 	}
 	
-	//Badge
+	//Android callbacks
+	public function onKeyPressed(typedText:String = "") {
+        #if android
+		
+        currentText = typedText;
+		
+		trace(currentText);
+		
+        Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_EVENT, currentText));
+        #end
+    }
+
+    public function onEnterPressed() {
+        #if android
+        Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_DONE, currentText));
+        #end
+    }
+
+    public function onKeyboardShown() {
+        #if android
+        Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_SHOW, currentText));
+        #end
+    }
+
+    public function onKeyboardHidden() {
+        #if android
+        Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_HIDE, currentText));
+        #end
+    }
 	
+	
+	//Badge
 	public static function setIconBadgeNumber(n:Int):Void
 	{
 		#if(cpp && mobile && !android)
@@ -207,7 +264,7 @@ class Native
 		#if android
 		if(funcAlert == null)
 		{
-			funcAlert = JNI.createStaticMethod("Native", "showAlert", "(Ljava/lang/String;Ljava/lang/String;)V", true);
+			funcAlert = JNI.createStaticMethod("com/androidnative/Native", "showAlert", "(Ljava/lang/String;Ljava/lang/String;)V", true);
 		}
 		
 		funcAlert([alertTitle, alertMSG]);
@@ -235,6 +292,10 @@ class Native
 	private static var funcVibrate:Dynamic;
 	private static var funcShowKeyboard:Dynamic;
 	private static var funcHideKeyboard:Dynamic;
+	//edit byRobin
+	private static var funcKeyboardInitialized:Dynamic;
+	private static var funcSetKeyboardText:Dynamic;
+	private static var currentText:String = "";
 	#end
 	
 	private static var keyboardInitialized:Bool = false;
