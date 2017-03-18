@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<section if="android">
+		<classpath name="src" />
+		<dependency name="native" path="dependencies/native" />
+	</section>
+	
+	<section if="ios">
+		<ndll name="native" />
+		<dependency name="SystemConfiguration.framework" />
+	</section>
+	
+</project>
