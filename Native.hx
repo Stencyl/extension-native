@@ -1,7 +1,5 @@
 package;
 
-import openfl.Lib;
-
 #if android
 import openfl.utils.JNI;
 #end
@@ -16,6 +14,8 @@ import openfl.geom.Rectangle;
 import openfl.events.KeyboardEvent;
 import openfl.events.EventDispatcher;
 import com.stencyl.Input;
+
+import lime.system.CFFI;
 
 class Native
 {	
@@ -301,22 +301,22 @@ class Native
 	private static var keyboardInitialized:Bool = false;
 	
 	#if(cpp && mobile && !android)
-	static var keyboard_set_event_handle = Lib.load("native","keyboard_set_event_handle",1);
+	static var keyboard_set_event_handle = CFFI.load("native","keyboard_set_event_handle",1);
 	
-	static var native_device_os = Lib.load("native","native_device_os",0);
-	static var native_device_vervion = Lib.load("native","native_device_vervion",0);
-	static var native_device_name = Lib.load("native","native_device_name",0);
-	static var native_device_model = Lib.load("native","native_device_model",0);
-	static var native_device_network_available = Lib.load("native","native_device_network_available",0);
-	static var native_device_vibrate = Lib.load("native","native_device_vibrate",1);
-	static var native_device_badge = Lib.load("native","native_device_badge",1);
+	static var native_device_os = CFFI.load("native","native_device_os",0);
+	static var native_device_vervion = CFFI.load("native","native_device_vervion",0);
+	static var native_device_name = CFFI.load("native","native_device_name",0);
+	static var native_device_model = CFFI.load("native","native_device_model",0);
+	static var native_device_network_available = CFFI.load("native","native_device_network_available",0);
+	static var native_device_vibrate = CFFI.load("native","native_device_vibrate",1);
+	static var native_device_badge = CFFI.load("native","native_device_badge",1);
 	
-	static var native_device_show_keyboard = Lib.load("native","native_device_show_keyboard",0);
-	static var native_device_hide_keyboard = Lib.load("native","native_device_hide_keyboard",0);
-	static var native_setKeyboardText = Lib.load("native","native_setKeyboardText",1);
+	static var native_device_show_keyboard = CFFI.load("native","native_device_show_keyboard",0);
+	static var native_device_hide_keyboard = CFFI.load("native","native_device_hide_keyboard",0);
+	static var native_setKeyboardText = CFFI.load("native","native_setKeyboardText",1);
 	
-	static var native_system_ui_show_alert = Lib.load("native","native_system_ui_show_alert",2);
-	static var native_system_ui_show_system_loading_view = Lib.load("native","native_system_ui_show_system_loading_view",0);
-	static var native_system_ui_hide_system_loading_view = Lib.load("native","native_system_ui_hide_system_loading_view",0);
+	static var native_system_ui_show_alert = CFFI.load("native","native_system_ui_show_alert",2);
+	static var native_system_ui_show_system_loading_view = CFFI.load("native","native_system_ui_show_system_loading_view",0);
+	static var native_system_ui_hide_system_loading_view = CFFI.load("native","native_system_ui_hide_system_loading_view",0);
 	#end
 }
