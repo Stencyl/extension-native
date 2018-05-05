@@ -1,6 +1,7 @@
 <xml>
 	
 	<set name="GCC_THIN_ARCHIVE" value="1" if="iphone"/>
+	<set name="HXCPP_CPP11" value="1" />
 	
 	<include name="${HXCPP}/build-tool/BuildCommon.xml"/>
 	
