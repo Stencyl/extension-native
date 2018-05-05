@@ -44,6 +44,7 @@ public class Native extends Extension
     private static String text = "";
     private static InputMethodManager imm;
     
+    private static final String GLOBAL_PREF_FILE = "nmeAppPrefs";
     
 	public static void vibrate(final int duration)
 	{
@@ -204,6 +205,34 @@ public class Native extends Extension
         });
     	
         //activity.showKeyboard(false);
+    }
+    
+    public static String getUserPreference (String inId)
+    {
+        
+        SharedPreferences prefs = mainActivity.getSharedPreferences (GLOBAL_PREF_FILE, Context.MODE_PRIVATE);
+        return prefs.getString (inId, "");
+        
+    }
+    
+    public static void setUserPreference (String inId, String inPreference)
+    {
+        
+        SharedPreferences prefs = mainActivity.getSharedPreferences (GLOBAL_PREF_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = prefs.edit ();
+        prefEditor.putString (inId, inPreference);
+        prefEditor.commit ();
+        
+    }
+    
+    public static void clearUserPreference (String inId)
+    {
+        
+        SharedPreferences prefs = mainActivity.getSharedPreferences (GLOBAL_PREF_FILE, Context.MODE_PRIVATE);
+        SharedPreferences.Editor prefEditor = prefs.edit ();
+        prefEditor.putString (inId, "");
+        prefEditor.commit ();
+        
     }
     
     static public void setText(final String newText)

@@ -1,6 +1,8 @@
 #ifndef NativeDevice
 #define NativeDevice
 
+#include <string>
+
 namespace native 
 {	
     void initDevice();
@@ -19,6 +21,10 @@ namespace native
     void showSystemAlert(const char* title, const char* message);
     void showLoadingScreen();
     void hideLoadingScreen();
+    
+    bool SetUserPreference(const char *inId, const char *inPreference);
+    std::string GetUserPreference(const char *inId);
+    bool ClearUserPreference(const char *inId);
 }
 
 #endif

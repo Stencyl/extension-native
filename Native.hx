@@ -287,11 +287,68 @@ class Native
 		#end
 	}
 	
+	//Preferences
+	
+	public static function getUserPreference(name:String):String
+	{
+		#if ios
+		return native_get_user_preference(name);
+		#end
+		
+		#if android
+		if(funcGetPreference == null)
+		{
+			funcGetPreference = JNI.createStaticMethod("com/androidnative/Native", "getUserPreference", "(Ljava/lang/String;)Ljava/lang/String;", true);
+		}
+		
+		return funcGetPreference([name]);
+		#end
+	}
+	
+	public static function setUserPreference(name:String, value:String):Bool
+	{
+		#if ios
+		native_set_user_preference(name, value);
+		#end
+		
+		#if android
+		if(funcSetPreference == null)
+		{
+			funcSetPreference = JNI.createStaticMethod("com/androidnative/Native", "setUserPreference", "(Ljava/lang/String;)V", true);
+		}
+		
+		funcSetPreference([name, value]);
+		#end
+		
+		return true;
+	}
+	
+	public static function clearUserPreference(name:String):Bool
+	{
+		#if ios
+		native_clear_user_preference(name);
+		#end
+		
+		#if android
+		if(funcClearPreference == null)
+		{
+			funcClearPreference = JNI.createStaticMethod("com/androidnative/Native", "clearUserPreference", "(Ljava/lang/String;)V", true);
+		}
+		
+		funcClearPreference([name]);
+		#end
+		
+		return true;
+	}
+	
 	#if android
 	private static var funcAlert:Dynamic;
 	private static var funcVibrate:Dynamic;
 	private static var funcShowKeyboard:Dynamic;
 	private static var funcHideKeyboard:Dynamic;
+	private static var funcGetPreference:Dynamic;
+	private static var funcSetPreference:Dynamic;
+	private static var funcClearPreference:Dynamic;
 	//edit byRobin
 	private static var funcKeyboardInitialized:Dynamic;
 	private static var funcSetKeyboardText:Dynamic;

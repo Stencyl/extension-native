@@ -100,6 +100,27 @@ void native_system_ui_hide_system_loading_view()
 }
 DEFINE_PRIM(native_system_ui_hide_system_loading_view,0);
 
+value native_set_user_preference(value inId,value inValue)
+{
+   bool result=SetUserPreference(val_string(inId),val_string(inValue));
+   return alloc_bool(result);
+}
+DEFINE_PRIM(native_set_user_preference,2);
+
+value native_get_user_preference(value inId)
+{
+   std::string result=GetUserPreference(val_string(inId));
+   return alloc_string(result.c_str());
+}
+DEFINE_PRIM(native_get_user_preference,1);
+
+value native_clear_user_preference(value inId)
+{
+   bool result=ClearUserPreference(val_string(inId));
+   return alloc_bool(result);
+}
+DEFINE_PRIM(native_clear_user_preference,1);
+
 #endif
 
 extern "C" void native_main() 
