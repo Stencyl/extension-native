@@ -3,7 +3,9 @@
 	
 	<section if="android">
 		<classpath name="src" />
-		<dependency name="native" path="dependencies/native" />
+		<!-- <dependency name="native" path="dependencies/native" /> this was preventing the import of SDLActivity due to package not found -->
+		<java path="dependencies/native" />
+		<android extension="com.androidnative.Native "/>
 	</section>
 	
 	<section if="ios">

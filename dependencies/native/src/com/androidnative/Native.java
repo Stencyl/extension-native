@@ -12,6 +12,8 @@ import org.haxe.lime.*;
 import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
 
+import org.libsdl.app.SDLActivity;
+
 import android.util.Log;
 import android.app.*;
 import android.content.*;
@@ -97,8 +99,18 @@ public class Native extends Extension
             {
                 if(event.getAction()==KeyEvent.ACTION_DOWN)
                 {
+					if (keyCode == KeyEvent.KEYCODE_BACK)
+					{
+						SDLActivity.onNativeKeyDown(keyCode);
+					}
                     return true;
                 }
+				
+				if (keyCode == KeyEvent.KEYCODE_BACK)
+				{
+					SDLActivity.onNativeKeyUp(keyCode);
+					return true;
+				}
                 
                 if(keyCode==KeyEvent.KEYCODE_ALT_LEFT || keyCode==KeyEvent.KEYCODE_ALT_RIGHT || keyCode==KeyEvent.KEYCODE_SHIFT_LEFT || keyCode==KeyEvent.KEYCODE_SHIFT_RIGHT)
                 {
@@ -239,4 +251,24 @@ public class Native extends Extension
     {
         text = newText;
     }
+	
+	@Override
+	public void onStop()
+	{
+		super.onStop();
+
+		mainActivity.runOnUiThread
+		(
+			new Runnable()
+			{
+				public void run()
+				{
+					if (callback != null)
+					{
+						callback.call("onStop", new Object[] {});
+					}
+				}
+			}
+		);
+	}
 }

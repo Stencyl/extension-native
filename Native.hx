@@ -234,6 +234,10 @@ class Native
         #end
     }
 	
+	public function onStop()
+	{
+		keyboardInitialized = false;
+	}
 	
 	//Badge
 	public static function setIconBadgeNumber(n:Int):Void
