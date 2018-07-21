@@ -198,7 +198,7 @@ public class Native extends Extension
         {
 			public void run()
 			{
-				imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+				imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
 			}
         });
 		
@@ -212,7 +212,7 @@ public class Native extends Extension
         {
     		public void run()
     		{
-    			imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+    			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     		}
         });
     	
