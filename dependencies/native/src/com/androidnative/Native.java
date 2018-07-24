@@ -213,6 +213,7 @@ public class Native extends Extension
     		public void run()
     		{
     			imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+				GameActivity.updateSystemUI();
     		}
         });
     	
