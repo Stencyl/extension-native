@@ -234,7 +234,7 @@ class Native
         #end
     }
 	
-	public function onStop()
+	public function onPause()
 	{
 		keyboardInitialized = false;
 	}

@@ -82,6 +82,11 @@ public class Native extends Extension
 					).create();
 			
 					dialog.show();
+					
+					if (callback != null)
+					{
+						callback.call("onPause", new Object[] {}); // reset keyboard because alert replaces key listener
+					}
 				}
 			}
 		);
@@ -254,9 +259,9 @@ public class Native extends Extension
     }
 	
 	@Override
-	public void onStop()
+	public void onPause()
 	{
-		super.onStop();
+		super.onPause();
 
 		mainActivity.runOnUiThread
 		(
@@ -266,7 +271,7 @@ public class Native extends Extension
 				{
 					if (callback != null)
 					{
-						callback.call("onStop", new Object[] {});
+						callback.call("onPause", new Object[] {});
 					}
 				}
 			}
