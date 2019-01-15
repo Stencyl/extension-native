@@ -24,7 +24,7 @@ class Native
 	
 	public static function osName():String
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		return native_device_os();
 		#elseif android
 		return "";
@@ -35,7 +35,7 @@ class Native
 	
 	public static function osVersion():String
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		return native_device_vervion();
 		#elseif android
 		return "";
@@ -46,7 +46,7 @@ class Native
 	
 	public static function deviceName():String
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		return native_device_name();
 		#elseif android
 		return "";
@@ -57,7 +57,7 @@ class Native
 	
 	public static function model():String
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		return native_device_model();
 		#elseif android
 		return "";
@@ -68,7 +68,7 @@ class Native
 	
 	public static function networkAvailable():Bool
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		return native_device_network_available();
 		#elseif android
 		return false;
@@ -79,7 +79,7 @@ class Native
 	
 	public static function vibrate(time:Float):Void
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		native_device_vibrate(time);
 		#end
 		
@@ -96,7 +96,7 @@ class Native
 	//Keyboard
 	public static function showKeyboard():Void
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		initKeyboard();
 		native_device_show_keyboard();
 		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_SHOW, ""));
@@ -117,7 +117,7 @@ class Native
 	
 	public static function hideKeyboard():Void
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		initKeyboard();
 		native_device_hide_keyboard();
 		Engine.events.addKeyboardEvent(new StencylEvent(StencylEvent.KEYBOARD_HIDE, ""));
@@ -138,7 +138,7 @@ class Native
 	
 	public static function setKeyboardText(text:String):Void
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		native_setKeyboardText(text);
 		#end
 		
@@ -154,7 +154,7 @@ class Native
 	
 	public static function initKeyboard():Void 
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		if(!keyboardInitialized)
 		{
 			keyboard_set_event_handle(notifyListeners);
@@ -180,7 +180,7 @@ class Native
 	
 	private static function notifyListeners(inEvent:Dynamic)
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		
 		//Fire Key Event
 		//var data:Int = Std.int(Reflect.field(inEvent, "data"));
@@ -242,7 +242,7 @@ class Native
 	//Badge
 	public static function setIconBadgeNumber(n:Int):Void
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		native_device_badge(n);
 		#end
 	}
@@ -261,7 +261,7 @@ class Native
 	
 	private static function delayAlert():Void
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		native_system_ui_show_alert(alertTitle, alertMSG);
 		#end
 		
@@ -279,14 +279,14 @@ class Native
 	
 	public static function showLoadingScreen():Void
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		native_system_ui_show_system_loading_view();
 		#end
 	}	
 	
 	public static function hideLoadingScreen():Void
 	{
-		#if(cpp && mobile && !android)
+		#if ios
 		native_system_ui_hide_system_loading_view();
 		#end
 	}
@@ -361,7 +361,7 @@ class Native
 	
 	private static var keyboardInitialized:Bool = false;
 	
-	#if(cpp && mobile && !android)
+	#if ios
 	static var keyboard_set_event_handle = CFFI.load("native","keyboard_set_event_handle",1);
 	
 	static var native_device_os = CFFI.load("native","native_device_os",0);
