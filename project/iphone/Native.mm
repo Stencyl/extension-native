@@ -5,6 +5,19 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
 
+UIApplication *app = [UIApplication sharedApplication];
+UIWindow * win = app.keyWindow;
+UIViewController * rvc = win.rootViewController;
+
+@implementation UIViewController (rvc)
+
+-(UIRectEdge)preferredScreenEdgesDeferringSystemGestures
+{
+    return UIRectEdgeAll;
+}
+
+@end
+
 using namespace native;
 
 @interface MyView : NSObject <UITextFieldDelegate>
