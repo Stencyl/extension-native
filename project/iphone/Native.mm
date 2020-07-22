@@ -60,9 +60,8 @@ extern "C" void sendTextFieldEvent2(const char* data);
    
    else
    {
-   		NSString* temp = _textField.text;
-		temp = [NSString stringWithFormat:@"%@%@", temp, string];
-   		sendTextFieldEvent([temp UTF8String]);
+   		NSString* temp = [_textField.text stringByReplacingCharactersInRange:range withString:string];
+		sendTextFieldEvent([temp UTF8String]);
    }
 
    return YES; // don't allow the edit! (keep placeholder text there) 
