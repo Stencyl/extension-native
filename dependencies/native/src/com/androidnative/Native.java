@@ -199,36 +199,6 @@ public class Native extends Extension
 		
 	}
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            setDisplayCutoutModeAlways();
-        }
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            setDisplayCutoutModeShortEdges();
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.P)
-    private static void setDisplayCutoutModeShortEdges()
-    {
-        Window window = mainActivity.getWindow();
-        WindowManager.LayoutParams wlp = window.getAttributes();
-
-        wlp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-        window.setAttributes(wlp);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    private static void setDisplayCutoutModeAlways()
-    {
-        Window window = mainActivity.getWindow();
-        WindowManager.LayoutParams wlp = window.getAttributes();
-
-        wlp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
-        window.setAttributes(wlp);
-    }
-    
     public static void showKeyboard() 
     {
 		mainActivity.runOnUiThread(new Runnable()

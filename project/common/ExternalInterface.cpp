@@ -121,6 +121,34 @@ value native_clear_user_preference(value inId)
 }
 DEFINE_PRIM(native_clear_user_preference,1);
 
+value native_get_safe_inset_left()
+{
+   int result=getSafeInsetLeft();
+   return alloc_int(result);
+}
+DEFINE_PRIM(native_get_safe_inset_left,0);
+
+value native_get_safe_inset_top()
+{
+   int result=getSafeInsetTop();
+   return alloc_int(result);
+}
+DEFINE_PRIM(native_get_safe_inset_top,0);
+
+value native_get_safe_inset_right()
+{
+   int result=getSafeInsetRight();
+   return alloc_int(result);
+}
+DEFINE_PRIM(native_get_safe_inset_right,0);
+
+value native_get_safe_inset_bottom()
+{
+   int result=getSafeInsetBottom();
+   return alloc_int(result);
+}
+DEFINE_PRIM(native_get_safe_inset_bottom,0);
+
 #endif
 
 extern "C" void native_main() 

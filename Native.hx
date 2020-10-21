@@ -344,6 +344,41 @@ class Native
 		
 		return true;
 	}
+
+	/**
+	 * Insets from the four sides, in pixels, given the current device orientation.
+	 */
+	public static function getSafeInsets():Rectangle
+	{
+		var left = 0;
+		var top = 0;
+		var right = 0;
+		var bottom = 0;
+
+		#if ios
+		left = native_get_safe_inset_left();
+		top = native_get_safe_inset_top();
+		right = native_get_safe_inset_right();
+		bottom = native_get_safe_inset_bottom();
+		#end
+
+		#if android
+		if(funcGetSafeInsetLeft == null)
+		{
+			funcGetSafeInsetLeft = JNI.createStaticMethod("org/haxe/lime/GameActivity", "getSafeInsetLeft", "()I", true);
+			funcGetSafeInsetTop = JNI.createStaticMethod("org/haxe/lime/GameActivity", "getSafeInsetTop", "()I", true);
+			funcGetSafeInsetRight = JNI.createStaticMethod("org/haxe/lime/GameActivity", "getSafeInsetRight", "()I", true);
+			funcGetSafeInsetBottom = JNI.createStaticMethod("org/haxe/lime/GameActivity", "getSafeInsetBottom", "()I", true);
+		}
+
+		left = funcGetSafeInsetLeft();
+		top = funcGetSafeInsetTop();
+		right = funcGetSafeInsetRight();
+		bottom = funcGetSafeInsetBottom();
+		#end
+
+		return new Rectangle(left, top, right, bottom);
+	}
 	
 	#if android
 	private static var funcAlert:Dynamic;
@@ -353,6 +388,10 @@ class Native
 	private static var funcGetPreference:Dynamic;
 	private static var funcSetPreference:Dynamic;
 	private static var funcClearPreference:Dynamic;
+	private static var funcGetSafeInsetLeft:Dynamic;
+	private static var funcGetSafeInsetTop:Dynamic;
+	private static var funcGetSafeInsetRight:Dynamic;
+	private static var funcGetSafeInsetBottom:Dynamic;
 	//edit byRobin
 	private static var funcKeyboardInitialized:Dynamic;
 	private static var funcSetKeyboardText:Dynamic;
@@ -383,5 +422,10 @@ class Native
 	static var native_get_user_preference = CFFI.load("native","native_get_user_preference",1);
 	static var native_set_user_preference = CFFI.load("native","native_set_user_preference",2);
 	static var native_clear_user_preference = CFFI.load("native","native_clear_user_preference",1);
+
+	static var native_get_safe_inset_left = CFFI.load("native","native_get_safe_inset_left",0);
+	static var native_get_safe_inset_top = CFFI.load("native","native_get_safe_inset_top",0);
+	static var native_get_safe_inset_right = CFFI.load("native","native_get_safe_inset_right",0);
+	static var native_get_safe_inset_bottom = CFFI.load("native","native_get_safe_inset_bottom",0);
 	#end
 }

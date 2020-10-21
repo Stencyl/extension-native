@@ -287,6 +287,46 @@ namespace native
 		#endif
 		return true;
 	}
-    
+
+	int getSafeInsetLeft()
+	{
+		if (@available(iOS 11.0, *)) {
+			UIWindow *window = UIApplication.sharedApplication.keyWindow;
+			return (int) roundf(window.safeAreaInsets.left * [UIScreen mainScreen].nativeScale);
+		}
+
+		return 0;
+	}
+
+	int getSafeInsetTop()
+	{
+		if (@available(iOS 11.0, *)) {
+			UIWindow *window = UIApplication.sharedApplication.keyWindow;
+			return (int) roundf(window.safeAreaInsets.top * [UIScreen mainScreen].nativeScale);
+		}
+
+		return 0;
+	}
+
+	int getSafeInsetRight()
+	{
+		if (@available(iOS 11.0, *)) {
+			UIWindow *window = UIApplication.sharedApplication.keyWindow;
+			return (int) roundf(window.safeAreaInsets.right * [UIScreen mainScreen].nativeScale);
+		}
+
+		return 0;
+	}
+
+	int getSafeInsetBottom()
+	{
+		if (@available(iOS 11.0, *)) {
+			UIWindow *window = UIApplication.sharedApplication.keyWindow;
+			return (int) roundf(window.safeAreaInsets.bottom * [UIScreen mainScreen].nativeScale);
+		}
+
+		return 0;
+	}
+
     //TODO: WebView
 }
