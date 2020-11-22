@@ -21,6 +21,7 @@ namespace native
     void showSystemAlert(const char* title, const char* message);
     void showLoadingScreen();
     void hideLoadingScreen();
+    void hideLaunchStoryboard();
     
     bool SetUserPreference(const char *inId, const char *inPreference);
     std::string GetUserPreference(const char *inId);

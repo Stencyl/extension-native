@@ -291,6 +291,13 @@ class Native
 		#end
 	}
 	
+	public static function hideLaunchStoryboard():Void
+	{
+		#if ios
+		native_system_ui_hide_launch_storyboard();
+		#end
+	}
+	
 	//Preferences
 	
 	public static function getUserPreference(name:String):String
@@ -418,6 +425,7 @@ class Native
 	static var native_system_ui_show_alert = CFFI.load("native","native_system_ui_show_alert",2);
 	static var native_system_ui_show_system_loading_view = CFFI.load("native","native_system_ui_show_system_loading_view",0);
 	static var native_system_ui_hide_system_loading_view = CFFI.load("native","native_system_ui_hide_system_loading_view",0);
+	static var native_system_ui_hide_launch_storyboard = CFFI.load("native","native_system_ui_hide_launch_storyboard",0);
 
 	static var native_get_user_preference = CFFI.load("native","native_get_user_preference",1);
 	static var native_set_user_preference = CFFI.load("native","native_set_user_preference",2);

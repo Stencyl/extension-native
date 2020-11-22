@@ -19,6 +19,7 @@
         <depend name="${HXCPP}/include/hx/CFFI.h"/>
         <compilerflag value="-IiPhone/include"/>
         <compilerflag value="-Iinclude"/>
+        <compilerflag value="-I../../../lib/lime/lime/project/lib/sdl/src/video/uikit"/>
 		<file name="iphone/Native.mm"/>
     </files>
     
