@@ -1,3 +1,4 @@
+id=com.stencyl.native
 name=Native Extension
 description=Various native integrations for Stencyl
 author=Jon
