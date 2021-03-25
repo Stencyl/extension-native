@@ -158,7 +158,6 @@ namespace native
 		{
 			NSString* temp = [[NSString alloc] initWithUTF8String:text];
 			mTextField.text = temp;
-			[temp release];
 		}
 	}
 	
@@ -172,11 +171,7 @@ namespace native
 		   {
 			  if(mTextField == nil)
 			  {
-				 #ifndef OBJC_ARC
-				 mTextField = [[[UITextField alloc] initWithFrame: CGRectMake(0,0,0,0)] autorelease];
-				 #else
 				 mTextField = [[UITextField alloc] initWithFrame: CGRectMake(0,0,0,0)];
-				 #endif
 	
 				 mTextField.delegate = [[MyView alloc] init];
 				 
@@ -209,9 +204,8 @@ namespace native
     void showSystemAlert(const char *title, const char *message)
     {	
         UIAlertView* alert= [[UIAlertView alloc] initWithTitle: [[NSString alloc] initWithUTF8String:title] message: [[NSString alloc] initWithUTF8String:message] 
-                                                      delegate: NULL cancelButtonTitle: @"OK" otherButtonTitles: NULL] ;//autorelease];
+                                                      delegate: NULL cancelButtonTitle: @"OK" otherButtonTitles: NULL] ;
         [alert show];
-        //[alert release];
     }
     
     void showLoadingScreen()
@@ -231,11 +225,9 @@ namespace native
         if(activityIndicator != NULL)
         {
             [activityIndicator stopAnimating];
-            [activityIndicator release];
             activityIndicator = NULL;
             
             [loadingView removeFromSuperview];
-            [loadingView release];
             loadingView = NULL;
         }
     }
@@ -243,48 +235,26 @@ namespace native
 	std::string GetUserPreference(const char *inId)
 	{
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-		#ifndef OBJC_ARC
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		#endif
 		NSString *strId = [[NSString alloc] initWithUTF8String:inId];
 		NSString *pref = [userDefaults stringForKey:strId];
 		std::string result(pref?[pref UTF8String]:"");
-		#ifndef OBJC_ARC
-		[strId release];
-		[pool drain];
-		#endif
 		return result;
 	}
 
 	bool SetUserPreference(const char *inId, const char *inPreference)
 	{
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-		#ifndef OBJC_ARC
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		#endif
 		NSString *strId = [[NSString alloc] initWithUTF8String:inId];
 		NSString *strPref = [[NSString alloc] initWithUTF8String:inPreference];
 		[userDefaults setObject:strPref forKey:strId];
-		#ifndef OBJC_ARC
-		[strId release];
-		[strPref release];
-		[pool drain];
-		#endif
 		return true;
 	}
 
 	bool ClearUserPreference(const char *inId)
 	{
 		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-		#ifndef OBJC_ARC
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		#endif
 		NSString *strId = [[NSString alloc] initWithUTF8String:inId];
 		[userDefaults setObject:@"" forKey:strId];
-		#ifndef OBJC_ARC
-		[strId release];
-		[pool drain];
-		#endif
 		return true;
 	}
 
