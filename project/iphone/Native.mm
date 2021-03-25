@@ -4,7 +4,6 @@
 #import <netinet/in.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <SystemConfiguration/SCNetworkReachability.h>
-#import <SDL_uikitappdelegate.h>
 
 UIApplication *app = [UIApplication sharedApplication];
 UIWindow * win = app.keyWindow;
@@ -239,11 +238,6 @@ namespace native
             [loadingView release];
             loadingView = NULL;
         }
-    }
-    
-    void hideLaunchStoryboard()
-    {
-    	[(SDLUIKitDelegate *)[[UIApplication sharedApplication] delegate] hideLaunchScreen];
     }
     
 	std::string GetUserPreference(const char *inId)

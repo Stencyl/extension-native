@@ -294,13 +294,6 @@ class Native
 		#end
 	}
 	
-	public static function hideLaunchStoryboard():Void
-	{
-		#if ios
-		native_system_ui_hide_launch_storyboard();
-		#end
-	}
-	
 	//Preferences
 	
 	public static function getUserPreference(name:String):String

@@ -100,12 +100,6 @@ void native_system_ui_hide_system_loading_view()
 }
 DEFINE_PRIM(native_system_ui_hide_system_loading_view,0);
 
-void native_system_ui_hide_launch_storyboard()
-{
-  hideLaunchStoryboard();
-}
-DEFINE_PRIM(native_system_ui_hide_launch_storyboard,0);
-
 value native_set_user_preference(value inId,value inValue)
 {
    bool result=SetUserPreference(val_string(inId),val_string(inValue));
