@@ -1,4 +1,4 @@
-package;
+package com.stencyl.native;
 
 #if android
 import lime.system.JNI;

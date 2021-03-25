@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
+	<source path="src" />
+	
 	<!--
 	On Android, this extension is not treated as a dependency.
 	We want to refer to lime/sdl, which is in the "app" module
