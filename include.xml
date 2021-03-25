@@ -23,7 +23,6 @@
 	</section>
 	
 	<section if="ios">
-		<ndll name="native" />
 		<dependency name="SystemConfiguration.framework" />
 	</section>
 	

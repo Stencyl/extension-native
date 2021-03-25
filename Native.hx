@@ -17,6 +17,9 @@ import com.stencyl.Input;
 
 import lime.system.CFFI;
 
+#if ios
+@:buildXml('<include name="${haxelib:com.stencyl.native}/project/Build.xml"/>')
+#end
 class Native
 {	
 
