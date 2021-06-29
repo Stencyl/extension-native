@@ -19,6 +19,8 @@ import lime.system.CFFI;
 
 #if ios
 @:buildXml('<include name="${haxelib:com.stencyl.native}/project/Build.xml"/>')
+//This is just here to prevent the otherwise indirectly referenced native code from bring stripped at link time.
+@:cppFileCode('extern "C" int native_register_prims();void com_stencyl_native_link(){native_register_prims();}')
 #end
 class Native
 {	
