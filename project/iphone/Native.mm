@@ -82,6 +82,7 @@ namespace native
 {
     UIActivityIndicatorView* activityIndicator;
     UIView* loadingView;
+    MyView* keyboardDelegate;
     
     UITextField *mTextField;
     BOOL mKeyboardEnabled;
@@ -173,7 +174,8 @@ namespace native
 			  {
 				 mTextField = [[UITextField alloc] initWithFrame: CGRectMake(0,0,0,0)];
 	
-				 mTextField.delegate = [[MyView alloc] init];
+				 keyboardDelegate = [[MyView alloc] init];
+				 mTextField.delegate = keyboardDelegate;
 				 
 				 /* placeholder so there is something to delete! (from SDL code) */
 				 mTextField.text = @" ";
