@@ -263,7 +263,7 @@ namespace native
 	int getSafeInsetLeft()
 	{
 		if (@available(iOS 11.0, *)) {
-			UIWindow *window = UIApplication.sharedApplication.keyWindow;
+			UIWindow *window = [[UIApplication sharedApplication] delegate].window;
 			return (int) roundf(window.safeAreaInsets.left * [UIScreen mainScreen].nativeScale);
 		}
 
@@ -273,7 +273,7 @@ namespace native
 	int getSafeInsetTop()
 	{
 		if (@available(iOS 11.0, *)) {
-			UIWindow *window = UIApplication.sharedApplication.keyWindow;
+			UIWindow *window = [[UIApplication sharedApplication] delegate].window;
 			return (int) roundf(window.safeAreaInsets.top * [UIScreen mainScreen].nativeScale);
 		}
 
@@ -283,7 +283,7 @@ namespace native
 	int getSafeInsetRight()
 	{
 		if (@available(iOS 11.0, *)) {
-			UIWindow *window = UIApplication.sharedApplication.keyWindow;
+			UIWindow *window = [[UIApplication sharedApplication] delegate].window;
 			return (int) roundf(window.safeAreaInsets.right * [UIScreen mainScreen].nativeScale);
 		}
 
@@ -293,7 +293,7 @@ namespace native
 	int getSafeInsetBottom()
 	{
 		if (@available(iOS 11.0, *)) {
-			UIWindow *window = UIApplication.sharedApplication.keyWindow;
+			UIWindow *window = [[UIApplication sharedApplication] delegate].window;
 			return (int) roundf(window.safeAreaInsets.bottom * [UIScreen mainScreen].nativeScale);
 		}
 
