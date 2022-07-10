@@ -177,8 +177,7 @@ namespace native
 				 keyboardDelegate = [[MyView alloc] init];
 				 mTextField.delegate = keyboardDelegate;
 				 
-				 /* placeholder so there is something to delete! (from SDL code) */
-				 mTextField.text = @" ";
+				 mTextField.text = @"";
 	
 				 /* set UITextInputTrait properties, mostly to defaults */
 				 mTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
